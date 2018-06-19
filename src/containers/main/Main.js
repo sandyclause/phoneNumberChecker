@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import Qs from "qs";
 import axios from "axios";
 import Checker from './Checker/Checker';
+import InfoDisplay from '../../components/InfoDisplay/InfoDisplay';
 
 class Main extends Component{
   constructor(){
     super();
     this.state = {
-      // number: ''
+      info: {}
     }
   }
 
@@ -32,7 +33,9 @@ class Main extends Component{
       }
     }).then((res) => {
       console.log(res.data);
-
+      this.setState({
+        info: res.data
+      })
     });
 
   }
@@ -42,14 +45,15 @@ class Main extends Component{
     console.log('entered');
     console.log(e.currentTarget.elements[0].value);
     this.getInfo(e.currentTarget.elements[0].value);
-    // this.setState({
-    //   number: e.currentTarget.elements[0].value
-    // })
+
   }
 
   render(){
     return(
-      <Checker enterInput={this.enterInput} />
+      <div>
+        <Checker enterInput={this.enterInput} />
+        <InfoDisplay carrier={this.state.info.carrier} />
+      </div>
     )
   }
 }
